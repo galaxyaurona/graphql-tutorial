@@ -33,10 +33,13 @@
   },
   "homepage": "https://github.com/brainstation-au/graphql-tutorial#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "apollo-server-express": "^2.4.8",
+    "express": "^4.16.4",
+    "graphql": "^14.2.1"
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
+    "@types/graphql": "^14.2.0",
     "@types/node": "^11.13.7",
     "concurrently": "^4.1.0",
     "jest": "^24.7.1",
