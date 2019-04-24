@@ -1,0 +1,46 @@
+{
+  "name": "graphql-tutorial",
+  "version": "1.0.0",
+  "description": "Asset for a tutorial of GraphQL with typescript",
+  "main": "dist/server.js",
+  "scripts": {
+    "test": "jest --forceExit --coverage --verbose",
+    "watch-test": "npm run test -- --watchAll",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "start": "npm run serve",
+    "build": "npm run tslint && npm run build-ts",
+    "serve": "node dist/server.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/server.js",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/server.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainstation-au/graphql-tutorial.git"
+  },
+  "keywords": [
+    "graphql",
+    "typescript"
+  ],
+  "author": "khalid@outlook.com.au",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brainstation-au/graphql-tutorial/issues"
+  },
+  "homepage": "https://github.com/brainstation-au/graphql-tutorial#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/node": "^11.13.7",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.11",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  }
+}
