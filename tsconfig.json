@@ -1,22 +1,24 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es6",
+      "es7",
+      "esnext.asynciterable"
+    ],
     "module": "commonjs",
-    "moduleResolution": "node",
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "dist",
-    "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
-      ]
-    },
     "sourceMap": true,
-    "strict": true,
     "target": "es6"
   },
+  "compileOnSave": true,
   "include": [
-    "src/**/*"
+    "src"
   ]
 }
