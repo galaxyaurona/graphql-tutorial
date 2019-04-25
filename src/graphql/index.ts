@@ -6,7 +6,7 @@ import { ApolloServer, gql } from 'apollo-server-express';
 export const addGraphQL = (app: Application, uriPath: string): ApolloServer => {
   // Type definitions.
   const typeDefs = gql`${mergeTypes(
-    fileLoader(path.join(__dirname, 'schemas/**/*.gql'), { recursive: true }),
+    fileLoader(path.join(__dirname, '../../schemas/**/*.gql'), { recursive: true }),
     { all: true },
   )}`;
 

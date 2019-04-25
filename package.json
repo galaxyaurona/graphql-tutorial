@@ -4,6 +4,7 @@
   "description": "Asset for a tutorial of GraphQL with typescript",
   "main": "dist/server.js",
   "scripts": {
+    "clean-up": "rm -rf dist",
     "test": "jest --forceExit --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
@@ -11,8 +12,8 @@
     "build": "npm run tslint && npm run build-ts",
     "serve": "node dist/server.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
-    "build-ts": "tsc",
-    "watch-ts": "tsc -w",
+    "build-ts": "npm run clean-up && tsc",
+    "watch-ts": "npm run clean-up && tsc -w",
     "watch-node": "nodemon dist/server.js",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect dist/server.js",
