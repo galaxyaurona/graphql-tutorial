@@ -8,6 +8,8 @@ services:
       - .:/opt/code
     ports:
       - "4000:4000"
+    depends_on:
+      - db
     working_dir: /opt/code
     command: sh -c "npm install && npm run watch"
 
@@ -22,3 +24,5 @@ services:
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      - db
