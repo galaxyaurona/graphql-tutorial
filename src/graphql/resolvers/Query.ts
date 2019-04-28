@@ -15,8 +15,8 @@ export const Query = {
     },
   ],
 
-  user: async (_src: any, args: any): Promise<User | null> => {
-    const {id} = Record({id: Number}).check(args);
+  user: async (_src: any, args: any): Promise<User> => {
+    const { id } = Record({id: Number}).check(args);
 
     return container.get<UserService>(UserService).getUser(id);
   },

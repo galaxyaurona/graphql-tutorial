@@ -1,20 +1,15 @@
-import { injectable, inject } from 'inversify';
-import { TYPES } from '../inversify/config';
-import { Connection, Repository, EntityManager } from 'typeorm';
+import { injectable } from 'inversify';
+import { Repository, getRepository } from 'typeorm';
 import { User } from '../entity/User';
 import { AddUserInput } from '../graphql/inputs/AddUserInput';
 import { UpdateUserInput } from '../graphql/inputs/UpdateUserInput';
 
 @injectable()
 export class UserService {
-  protected em: EntityManager;
   protected userRepo: Repository<User>;
 
-  constructor(
-    @inject(TYPES.database) connection: Connection,
-  ) {
-    this.em = connection.manager;
-    this.userRepo = connection.getRepository(User);
+  constructor() {
+    this.userRepo = getRepository(User);
   }
 
   public async getUser(id: number): Promise<User> {
@@ -28,7 +23,7 @@ export class UserService {
     user.lastName = input.lastName;
     user.isActive = 'isActive' in input ? input.isActive : true;
 
-    return this.em.save(user);
+    return this.userRepo.save(user);
   }
 
   public async updateUser(input: UpdateUserInput): Promise<User> {
