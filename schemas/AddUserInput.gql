@@ -1,0 +1,6 @@
+input AddUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  isActive: Boolean
+}

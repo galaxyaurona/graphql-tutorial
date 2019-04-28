@@ -43,6 +43,7 @@
     "merge-graphql-schemas": "^1.5.8",
     "pg": "^7.10.0",
     "reflect-metadata": "^0.1.13",
+    "runtypes": "^3.2.0",
     "source-map-support": "^0.5.12",
     "typeorm": "^0.2.16"
   },

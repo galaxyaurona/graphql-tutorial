@@ -1,0 +1,7 @@
+input UpdateUserInput {
+  id: Int!
+  firstName: String
+  lastName: String
+  email: String
+  isActive: Boolean
+}
