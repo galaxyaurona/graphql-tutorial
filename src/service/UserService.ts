@@ -12,7 +12,7 @@ export class UserService {
     this.userRepo = getRepository(User);
   }
 
-  public async getUser(id: number): Promise<User> {
+  public async getUser(id: string): Promise<User> {
     return this.userRepo.findOne({ id });
   }
 

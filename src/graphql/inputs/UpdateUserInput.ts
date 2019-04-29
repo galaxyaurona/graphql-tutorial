@@ -1,7 +1,7 @@
-import { Boolean, Record, String, Partial, Static, Number } from 'runtypes';
+import { Boolean, Record, String, Partial, Static } from 'runtypes';
 
 export const UpdateUserInput = Record({
-  id: Number,
+  id: String,
 }).And(Partial({
   firstName: String,
   lastName: String,

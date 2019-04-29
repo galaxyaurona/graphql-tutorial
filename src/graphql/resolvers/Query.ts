@@ -1,4 +1,4 @@
-import { Record, Number } from 'runtypes';
+import { Record, String } from 'runtypes';
 import { User } from '../../entity/User';
 import { container } from '../../inversify/config';
 import { UserService } from '../../service/UserService';
@@ -16,7 +16,7 @@ export const Query = {
   ],
 
   user: async (_src: any, args: any): Promise<User> => {
-    const { id } = Record({id: Number}).check(args);
+    const { id } = Record({id: String}).check(args);
 
     return container.get<UserService>(UserService).getUser(id);
   },

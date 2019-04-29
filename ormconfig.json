@@ -5,7 +5,7 @@
    "username": "postgres",
    "password": "example",
    "database": "postgres",
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "entities": [
       "dist/entity/**/*.js"

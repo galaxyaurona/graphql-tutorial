@@ -8,4 +8,5 @@ import { initServer } from './server';
 
 globalCatchOnPromiseRejection();
 connectDatabase()
-  .then(initServer);
+  .then(initServer)
+  .catch(console.log);
