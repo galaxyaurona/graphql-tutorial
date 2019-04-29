@@ -1,6 +1,6 @@
 {
    "type": "postgres",
-   "host": "localhost",
+   "host": "db",
    "port": 5432,
    "username": "postgres",
    "password": "example",
@@ -8,17 +8,13 @@
    "synchronize": true,
    "logging": false,
    "entities": [
-      "src/entity/**/*.ts"
+      "dist/entity/**/*.js"
    ],
    "migrations": [
-      "src/typeorm/migration/**/*.ts"
-   ],
-   "subscribers": [
-      "src/typeorm/subscriber/**/*.ts"
+      "dist/typeorm/migration/*.js"
    ],
    "cli": {
       "entitiesDir": "src/entity",
-      "migrationsDir": "src/typeorm/migration",
-      "subscribersDir": "src/typeorm/subscriber"
+      "migrationsDir": "src/typeorm/migration"
    }
 }

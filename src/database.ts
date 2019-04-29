@@ -11,5 +11,5 @@ export const connectDatabase: () => Promise<Connection> = () => createConnection
   entities: [
     path.join(__dirname, 'entity/**/*.js')
   ],
-  synchronize: true,
+  synchronize: false,
 });
