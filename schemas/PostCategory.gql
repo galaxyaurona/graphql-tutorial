@@ -1,0 +1,7 @@
+enum PostCategory {
+  National
+  International
+  Technology
+  Sport
+  Entertainment
+}
