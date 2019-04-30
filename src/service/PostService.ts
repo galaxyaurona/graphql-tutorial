@@ -2,6 +2,7 @@ import { injectable } from 'inversify';
 import { Post } from '../entity/Post';
 import { AddPostInput } from '../types/AddPostInput';
 import { getRepository } from 'typeorm';
+import { User } from '../entity/User';
 
 @injectable()
 export class PostService {
@@ -10,6 +11,7 @@ export class PostService {
     post.title = input.title;
     post.body = input.body;
     post.category = input.category;
+    post.author = await getRepository(User).findOne({ id: input.authorId });
 
     return getRepository(Post).save(post);
   }
