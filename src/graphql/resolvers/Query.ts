@@ -4,7 +4,8 @@ import { container } from '../../inversify/config';
 import { UserService } from '../../service/UserService';
 import { PostService } from '../../service/PostService';
 import { Post } from '../../entity/Post';
-import { PostsConnectionInput } from '../../types/PostsConnectionInput';
+import { PostsConnectionInput, PostsConnectionInputForward, PostsConnectionInputBackward } from '../../types/PostsConnectionInput';
+import { PostsConnectionSource } from '../../types/PostsConnectionSource';
 
 export const Query = {
   books: () => [
@@ -30,16 +31,13 @@ export const Query = {
     return container.get<PostService>(PostService).getPost(id);
   },
 
-  posts: async (_src: any, args: any): Promise<any> => {
+  posts: async (_src: any, args: any): Promise<PostsConnectionSource> => {
     const { input } = Record({ input: PostsConnectionInput }).check(args);
-    console.log(input);
 
-    // if (PostsConnectionInputForward.guard(args)) {
-    //   return container.get<PostService>(PostService).listPostsForward(input);
-    // } else {
-    //   return container.get<PostService>(PostService).listPostsBackward(input);
-    // }
-
-    return [];
+    if (Object.keys(input).length === 0 || 'first' in input || 'after' in input) {
+      return container.get<PostService>(PostService).listPostsForward(input as PostsConnectionInputForward);
+    } else {
+      return container.get<PostService>(PostService).listPostsBackward(input as PostsConnectionInputBackward);
+    }
   },
 };
