@@ -1,5 +1,5 @@
 // tslint:disable:max-line-length
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class dbUpdate1556670262996 implements MigrationInterface {
 

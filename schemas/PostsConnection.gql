@@ -1,0 +1,5 @@
+type PostsConnection {
+  totalCount: Int!
+  edges: [PostsConnectionEdge!]!
+  pageInfo: PostsConnectionPageInfo!
+}

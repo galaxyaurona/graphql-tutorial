@@ -1,0 +1,6 @@
+type PostsConnectionPageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
