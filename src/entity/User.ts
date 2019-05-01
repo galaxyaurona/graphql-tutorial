@@ -7,18 +7,18 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 64 })
+  @Column({ length: 64, nullable: false })
   firstName: string;
 
   @Column({ length: 64 })
   lastName: string;
 
-  @Column({ length: 64 })
+  @Column({ length: 64, nullable: false })
   email: string;
 
-  @Column()
+  @Column({ default: true })
   isActive: boolean;
 
-  @OneToMany(() => Post, post => post.author)
+  @OneToMany(() => Post, post => post.author, { onDelete: 'RESTRICT' })
   posts: Post[];
 }

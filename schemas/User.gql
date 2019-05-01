@@ -1,11 +1,13 @@
 type User {
-  id: ID
+  id: ID!
 
-  firstName: String
+  firstName: String!
 
   lastName: String
 
-  email: String
+  email: String!
 
-  isActive: Boolean
+  isActive: Boolean!
+
+  posts: [Post!]!
 }

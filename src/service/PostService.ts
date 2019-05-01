@@ -1,22 +1,31 @@
 import { injectable } from 'inversify';
 import { Post } from '../entity/Post';
 import { AddPostInput } from '../types/AddPostInput';
-import { getRepository } from 'typeorm';
-import { User } from '../entity/User';
+import { getRepository, Repository } from 'typeorm';
 
 @injectable()
 export class PostService {
-  public async addPost(input: AddPostInput): Promise<Post> {
-    const post = new Post();
-    post.title = input.title;
-    post.body = input.body;
-    post.category = input.category;
-    post.author = await getRepository(User).findOne({ id: input.authorId });
+  protected repo: Repository<Post>;
 
-    return getRepository(Post).save(post);
+  constructor() {
+    this.repo = getRepository(Post);
+  }
+
+  public async addPost(input: AddPostInput): Promise<Post> {
+    const post = this.repo.create(input);
+    return this.repo.save(post);
   }
 
   public async getPost(id: string): Promise<Post> {
-    return getRepository(Post).findOne({ id });
+    return this.repo.findOne({
+      where: { id },
+      relations: ['author'],
+    });
+  }
+
+  public async getAuthorsPosts(authorId: string): Promise<Post[]> {
+    return this.repo.find({
+      author: { id: authorId }
+    });
   }
 }
