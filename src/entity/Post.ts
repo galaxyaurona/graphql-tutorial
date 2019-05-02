@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { PostCategories, PostCategory } from '../types/PostCategory';
 import { User } from './User';
 
@@ -8,17 +8,20 @@ export class Post {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 256, nullable: false })
+  @Column({ length: 256 })
   title: string;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text', nullable: true})
   body: string;
 
   @Column({ type: 'enum', enum: PostCategories, default: 'National' })
   category: PostCategory;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: string;
+
+  @UpdateDateColumn({ type: 'timestamp', select: false })
+  updatedAt: string;
 
   @ManyToOne(() => User, user => user.posts, { nullable: false })
   author: User;
