@@ -18,10 +18,10 @@ export class Post {
   category: PostCategory;
 
   @CreateDateColumn({ type: 'timestamp' })
-  createdAt: string;
+  createdAt: number;
 
   @UpdateDateColumn({ type: 'timestamp', select: false })
-  updatedAt: string;
+  updatedAt: number;
 
   @ManyToOne(() => User, user => user.posts, { nullable: false })
   author: User;

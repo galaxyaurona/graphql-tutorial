@@ -1,4 +1,4 @@
-import { Record, String, Partial, Static } from 'runtypes';
+import { Record, String, Partial, Static, Number } from 'runtypes';
 import { PostCategory } from './PostCategory';
 import { UserSource } from './UserSource';
 
@@ -6,7 +6,7 @@ export const PostSource = Record({
   id: String,
   title: String,
   category: PostCategory,
-  createdAt: String,
+  createdAt: Number,
   author: UserSource,
 }).And(Partial({
   body: String,

@@ -20,10 +20,10 @@ export class User {
   isActive: boolean;
 
   @CreateDateColumn({ type: 'timestamp', select: false })
-  createdAt: string;
+  createdAt: number;
 
   @UpdateDateColumn({ type: 'timestamp', select: false })
-  updatedAt: string;
+  updatedAt: number;
 
   @OneToMany(() => Post, post => post.author, { onDelete: 'RESTRICT' })
   posts: Post[];
