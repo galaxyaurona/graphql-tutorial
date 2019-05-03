@@ -1,4 +1,4 @@
-import { Number, String, Static, Partial } from 'runtypes';
+import { Number, String, Static, Partial, Undefined } from 'runtypes';
 
 export const PostsConnectionInputForward = Partial({
   first: Number.withConstraint(n => n > 0),
@@ -14,6 +14,8 @@ export const PostsConnectionInputBackward = Partial({
 
 export type PostsConnectionInputBackward = Static<typeof PostsConnectionInputBackward>;
 
-export const PostsConnectionInput = PostsConnectionInputForward.Or(PostsConnectionInputBackward);
+export const PostsConnectionInput = PostsConnectionInputForward
+  .Or(PostsConnectionInputBackward)
+  .Or(Undefined);
 
 export type PostsConnectionInput = Static<typeof PostsConnectionInput>;

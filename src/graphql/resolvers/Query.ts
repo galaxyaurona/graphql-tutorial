@@ -32,7 +32,7 @@ export const Query = {
   },
 
   posts: async (_src: any, args: any): Promise<PostsConnectionSource> => {
-    const { input } = Record({ input: PostsConnectionInput }).check(args);
+    const input = Record({ input: PostsConnectionInput }).check(args)['input'] || {};
 
     if (Object.keys(input).length === 0 || 'first' in input || 'after' in input) {
       return container.get<PostService>(PostService).listPostsForward(input as PostsConnectionInputForward);
