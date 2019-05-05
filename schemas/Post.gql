@@ -3,6 +3,6 @@ type Post {
   title: String!
   body: String
   category: PostCategory!
-  createdAt: String!
+  createdAt: Float!
   author: User!
 }

@@ -35,9 +35,15 @@ export const Query = {
     const input = Record({ input: PostsConnectionInput }).check(args)['input'] || {};
 
     if (Object.keys(input).length === 0 || 'first' in input || 'after' in input) {
-      return container.get<PostService>(PostService).listPostsForward(input as PostsConnectionInputForward);
+      return {
+        entities: await container.get<PostService>(PostService).listPostsForward(input as PostsConnectionInputForward),
+        order: 'ASC',
+      };
     } else {
-      return container.get<PostService>(PostService).listPostsBackward(input as PostsConnectionInputBackward);
+      return {
+        entities: await container.get<PostService>(PostService).listPostsBackward(input as PostsConnectionInputBackward),
+        order: 'DESC',
+      };
     }
   },
 };

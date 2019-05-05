@@ -1,11 +1,4 @@
-import { Array, Number, Static, Record } from 'runtypes';
-import { PostsConnectionEdgeSource } from './PostsConnectionEdgeSource';
-import { PostsConnectionPageInfo } from './PostsConnectionPageInfo';
+import { Post } from '../entity/Post';
+import { ConnectionSource } from './ConnectionSource';
 
-export const PostsConnectionSource = Record({
-  totalCount: Number,
-  edges: Array(PostsConnectionEdgeSource),
-  pageInfo: PostsConnectionPageInfo,
-});
-
-export type PostsConnectionSource = Static<typeof PostsConnectionSource>;
+export type PostsConnectionSource = ConnectionSource<Post>;

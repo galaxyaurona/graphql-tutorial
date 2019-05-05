@@ -1,12 +1,8 @@
 import { injectable } from 'inversify';
 import { Post } from '../entity/Post';
 import { AddPostInput } from '../types/AddPostInput';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, FindManyOptions, MoreThan, FindConditions, LessThan } from 'typeorm';
 import { PostsConnectionInputForward, PostsConnectionInputBackward } from '../types/PostsConnectionInput';
-import { PostsConnectionSource } from '../types/PostsConnectionSource';
-import { PostsConnectionEdgeSource } from '../types/PostsConnectionEdgeSource';
-import { PostSource } from '../types/PostSource';
-import { PostsConnectionPageInfo } from '../types/PostsConnectionPageInfo';
 
 @injectable()
 export class PostService {
@@ -34,50 +30,53 @@ export class PostService {
     });
   }
 
-  public async listPosts(skip: number, take: number, direction: 'ASC' | 'DESC', authorId?: string): Promise<PostsConnectionSource> {
-    const [ posts, totalCount ] = await this.repo.findAndCount({
-      where: authorId ? { id: authorId } : {},
+  public async listPosts(options: FindManyOptions<Post>): Promise<Post[]> {
+    return this.repo.find({
       relations: ['author'],
-      order: {
-        createdAt: direction,
-      },
-      take,
-      skip,
       cache: true,
+      ...options,
     });
-
-    const edges: PostsConnectionEdgeSource[] = posts.map((post: PostSource, index: number) => ({
-      node: post,
-      cursor: Buffer.from((skip + index + 1).toString(), 'binary').toString('base64'),
-    }));
-
-    const pageInfo: PostsConnectionPageInfo = {
-      hasNextPage: totalCount > 0 && (skip + take) < totalCount,
-      hasPreviousPage: totalCount > 0 && skip > 0,
-      startCursor: edges.length ? edges[0].cursor : null,
-      endCursor: edges.length ? edges[edges.length - 1].cursor : null,
-    };
-
-    return {
-      totalCount,
-      edges,
-      pageInfo,
-    };
   }
 
-  public async listPostsForward({first, after}: PostsConnectionInputForward, authorId?: string): Promise<PostsConnectionSource> {
-    const skip: number = after && parseInt(Buffer.from(after, 'base64').toString()) !== NaN
-      ? parseInt(Buffer.from(after, 'base64').toString()) : 0;
-    const take: number = (first && first < 10) ? first : 10;
+  public async listPostsForward(
+    { first, after }: PostsConnectionInputForward,
+    conditions: FindConditions<Post> = {},
+  ): Promise<Post[]> {
+    const createdAfter: number = after && parseInt(Buffer.from(after, 'base64').toString());
+    const createdAt: FindConditions<Post> = createdAfter ? { createdAt : MoreThan(createdAfter) } : {};
 
-    return this.listPosts(skip, take, 'ASC', authorId);
+    const options: FindManyOptions<Post> = {
+      take: first && first < 10 ? first : 10,
+      where: {
+        ...createdAt,
+        ...conditions,
+      },
+      order: {
+        createdAt: 'ASC',
+      },
+    };
+
+    return this.listPosts(options);
   }
 
-  public async listPostsBackward({last, before}: PostsConnectionInputBackward, authorId?: string): Promise<PostsConnectionSource> {
-    const skip: number = before && parseInt(Buffer.from(before, 'base64').toString()) !== NaN
-      ? parseInt(Buffer.from(before, 'base64').toString()) : 0;
-    const take: number = (last && last < 10) ? last : 10;
+  public async listPostsBackward(
+    { last, before }: PostsConnectionInputBackward,
+    conditions: FindConditions<Post> = {},
+  ): Promise<Post[]> {
+    const createdBefore: number = before && parseInt(Buffer.from(before, 'base64').toString());
+    const createdAt: FindConditions<Post> = createdBefore ? { createdAt : LessThan(createdBefore) } : {};
 
-    return this.listPosts(skip, take, 'DESC', authorId);
+    const options: FindManyOptions<Post> = {
+      take: last && last < 10 ? last : 10,
+      where: {
+        ...createdAt,
+        ...conditions,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    };
+
+    return this.listPosts(options);
   }
 }
