@@ -1,6 +1,6 @@
 import { PageInfoSource } from '../../types/PageInfoSource';
 import { Post } from '../../entity/Post';
-import { FindManyOptions, LessThan, MoreThan, getRepository } from 'typeorm';
+import { LessThan, MoreThan, getRepository, FindConditions } from 'typeorm';
 import { base64Encode } from '../../util/base64Encode';
 
 export const PostsConnectionPageInfo = {
@@ -9,30 +9,24 @@ export const PostsConnectionPageInfo = {
   endCursor: (src: PageInfoSource<Post>) => base64Encode(src.lastCreatedAt.toISOString()),
 
   hasPreviousPage: async (src: PageInfoSource<Post>) => {
-    const options: FindManyOptions<Post> = {
-      cache: true,
-      where: {
-        createdAt: src.order === 'ASC' ? LessThan(src.firstCreatedAt) : MoreThan(src.firstCreatedAt),
-        ...src.conditions,
-      },
+    const conditions: FindConditions<Post> = {
+      createdAt: LessThan(src.firstCreatedAt),
+      ...src.conditions,
     };
 
-    return getRepository(Post).count(options).then(r => {
+    return getRepository(Post).count(conditions).then(r => {
       console.log('previous: ', r);
       return r;
     });
   },
 
   hasNextPage: async (src: PageInfoSource<Post>) => {
-    const options: FindManyOptions<Post> = {
-      cache: true,
-      where: {
-        createdAt: src.order === 'ASC' ? MoreThan(src.lastCreatedAt) : LessThan(src.lastCreatedAt),
-        ...src.conditions,
-      },
+    const conditions: FindConditions<Post> = {
+      createdAt: MoreThan(src.lastCreatedAt),
+      ...src.conditions,
     };
 
-    return getRepository(Post).count(options).then(r => {
+    return getRepository(Post).count(conditions).then(r => {
       console.log('next', r);
       return r;
     });

@@ -37,12 +37,10 @@ export const Query = {
     if (Object.keys(input).length === 0 || 'first' in input || 'after' in input) {
       return {
         entities: await container.get<PostService>(PostService).listPostsForward(input as PostsConnectionInputForward),
-        order: 'ASC',
       };
     } else {
       return {
         entities: await container.get<PostService>(PostService).listPostsBackward(input as PostsConnectionInputBackward),
-        order: 'DESC',
       };
     }
   },

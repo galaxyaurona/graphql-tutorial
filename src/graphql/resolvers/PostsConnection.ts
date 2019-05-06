@@ -24,7 +24,6 @@ export const PostsConnection = {
   pageInfo: (src: PostsConnectionSource): PageInfoSource<Post> => ({
     firstCreatedAt: src.entities[0].createdAt,
     lastCreatedAt: src.entities[src.entities.length - 1].createdAt,
-    order: src.order,
     conditions: src.conditions,
   }),
 };
