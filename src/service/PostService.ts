@@ -3,6 +3,7 @@ import { Post } from '../entity/Post';
 import { AddPostInput } from '../types/AddPostInput';
 import { getRepository, Repository, FindManyOptions, MoreThan, FindConditions, LessThan } from 'typeorm';
 import { PostsConnectionInputForward, PostsConnectionInputBackward } from '../types/PostsConnectionInput';
+import { base64Decode } from '../util/base64Decode';
 
 @injectable()
 export class PostService {
@@ -42,7 +43,7 @@ export class PostService {
     { first, after }: PostsConnectionInputForward,
     conditions: FindConditions<Post> = {},
   ): Promise<Post[]> {
-    const createdAfter: number = after && parseInt(Buffer.from(after, 'base64').toString());
+    const createdAfter: string = after && base64Decode(after);
     const createdAt: FindConditions<Post> = createdAfter ? { createdAt : MoreThan(createdAfter) } : {};
 
     const options: FindManyOptions<Post> = {
@@ -63,7 +64,7 @@ export class PostService {
     { last, before }: PostsConnectionInputBackward,
     conditions: FindConditions<Post> = {},
   ): Promise<Post[]> {
-    const createdBefore: number = before && parseInt(Buffer.from(before, 'base64').toString());
+    const createdBefore: string = before && base64Decode(before);
     const createdAt: FindConditions<Post> = createdBefore ? { createdAt : LessThan(createdBefore) } : {};
 
     const options: FindManyOptions<Post> = {

@@ -2,6 +2,7 @@ import { PostsConnectionSource } from '../../types/PostsConnectionSource';
 import { getRepository, FindManyOptions } from 'typeorm';
 import { Post } from '../../entity/Post';
 import { PageInfoSource } from '../../types/PageInfoSource';
+import { base64Encode } from '../../util/base64Encode';
 
 export const PostsConnection = {
   totalCount: async (src: PostsConnectionSource) => {
@@ -16,7 +17,7 @@ export const PostsConnection = {
   edges: async (src: PostsConnectionSource) => {
     return src.entities.map(entity => ({
       node: entity,
-      cursor: Buffer.from(entity.createdAt.toString(), 'binary').toString('base64'),
+      cursor: base64Encode(entity.createdAt.toISOString()),
     }));
   },
 
