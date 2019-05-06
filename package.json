@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "clean-up": "rm -rf dist",
-    "test": "jest --forceExit --coverage --verbose",
+    "test": "jest --forceExit --detectOpenHandles",
     "watch-test": "npm run test -- --watchAll",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "start": "npm run serve",
