@@ -1,4 +1,4 @@
-type PostsConnectionPageInfo {
+type ConnectionPageInfo {
   startCursor: String
   endCursor: String
   hasNextPage: Boolean!

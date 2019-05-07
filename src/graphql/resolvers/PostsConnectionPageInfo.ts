@@ -1,28 +1,29 @@
 import { PageInfoSource } from '../../types/PageInfoSource';
 import { Post } from '../../entity/Post';
-import { LessThan, MoreThan, getRepository, FindConditions } from 'typeorm';
+import { LessThan, MoreThan, FindConditions } from 'typeorm';
 import { base64Encode } from '../../util/base64Encode';
+import { User } from '../../entity/User';
 
-export const PostsConnectionPageInfo = {
-  startCursor: (src: PageInfoSource<Post>) => base64Encode(src.startSerial.toString()),
+export const ConnectionPageInfo = {
+  startCursor: (src: PageInfoSource<Post | User>) => base64Encode(src.startSerial.toString()),
 
-  endCursor: (src: PageInfoSource<Post>) => base64Encode(src.endSerial.toString()),
+  endCursor: (src: PageInfoSource<Post | User>) => base64Encode(src.endSerial.toString()),
 
-  hasPreviousPage: async (src: PageInfoSource<Post>) => {
-    const conditions: FindConditions<Post> = {
+  hasPreviousPage: async (src: PageInfoSource<Post | User>) => {
+    const conditions: FindConditions<Post | User> = {
       serial: LessThan(src.startSerial),
       ...src.conditions,
     };
 
-    return getRepository(Post).count(conditions);
+    return src.repository.count(conditions);
   },
 
-  hasNextPage: async (src: PageInfoSource<Post>) => {
-    const conditions: FindConditions<Post> = {
+  hasNextPage: async (src: PageInfoSource<Post | User>) => {
+    const conditions: FindConditions<Post | User> = {
       serial: MoreThan(src.endSerial),
       ...src.conditions,
     };
 
-    return getRepository(Post).count(conditions);
+    return src.repository.count(conditions);
   },
 };
