@@ -19,10 +19,7 @@ export class PostService {
   }
 
   public async getPost(id: string): Promise<Post> {
-    return this.repo.findOne({
-      where: { id },
-      relations: ['author'],
-    });
+    return this.repo.findOne(id);
   }
 
   public async getAuthorsPosts(authorId: string): Promise<Post[]> {
@@ -33,7 +30,6 @@ export class PostService {
 
   public async listPosts(options: FindManyOptions<Post>): Promise<Post[]> {
     return this.repo.find({
-      relations: ['author'],
       cache: true,
       ...options,
     });

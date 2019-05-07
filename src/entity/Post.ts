@@ -27,6 +27,9 @@ export class Post {
   @UpdateDateColumn({ type: 'timestamp', select: false })
   updatedAt: Date;
 
+  @Column()
+  authorId: string;
+
   @ManyToOne(() => User, user => user.posts, { nullable: false })
   author: User;
 }
