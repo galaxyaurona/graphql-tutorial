@@ -8,17 +8,6 @@ import { ConnectionInput, ConnectionInputForward, ConnectionInputBackward } from
 import { ConnectionSource } from '../../types/ConnectionSource';
 
 export const Query = {
-  books: () => [
-    {
-      title: 'Harry Potter and the Chamber of Secrets',
-      author: 'J.K. Rowling',
-    },
-    {
-      title: 'Jurassic Park',
-      author: 'Michael Crichton',
-    },
-  ],
-
   user: async (_src: any, args: any): Promise<User> => {
     const { id } = Record({id: String}).check(args);
 

@@ -1,5 +1,4 @@
 type Query {
-  books: [Book]
   user(id: ID!): User
   post(id: ID!): Post
   posts(input: ConnectionInput): PostsConnection
