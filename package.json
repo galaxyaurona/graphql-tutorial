@@ -47,7 +47,8 @@
     "reflect-metadata": "^0.1.13",
     "runtypes": "^3.2.0",
     "source-map-support": "^0.5.12",
-    "typeorm": "^0.2.16"
+    "typeorm": "^0.2.16",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "@playlyfe/gql": "^2.6.1",
@@ -58,6 +59,7 @@
     "@types/jest": "^24.0.12",
     "@types/node": "^11.13.7",
     "@types/pg": "^7.4.14",
+    "@types/validator": "^10.11.0",
     "concurrently": "^4.1.0",
     "faker": "^4.1.0",
     "jest": "^24.7.1",
