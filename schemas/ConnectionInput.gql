@@ -1,4 +1,4 @@
-input PostsConnectionInput {
+input ConnectionInput {
   first: Int
   after: String
   last: Int

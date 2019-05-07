@@ -2,5 +2,5 @@ type Query {
   books: [Book]
   user(id: ID!): User
   post(id: ID!): Post
-  posts(input: PostsConnectionInput): PostsConnection
+  posts(input: ConnectionInput): PostsConnection
 }

@@ -9,5 +9,5 @@ type User {
 
   isActive: Boolean!
 
-  posts: [Post!]!
+  posts(input: ConnectionInput): PostsConnection!
 }
