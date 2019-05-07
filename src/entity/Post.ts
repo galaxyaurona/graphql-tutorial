@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, CreateDateColumn, UpdateDateColumn, Generated } from 'typeorm';
 import { PostCategories, PostCategory } from '../types/PostCategory';
 import { User } from './User';
 
@@ -7,6 +7,10 @@ export class Post {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Generated()
+  @Column()
+  serial: number;
 
   @Column({ length: 256 })
   title: string;

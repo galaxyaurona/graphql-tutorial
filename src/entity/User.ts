@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Generated } from 'typeorm';
 import { Post } from './Post';
 
 @Entity()
@@ -6,6 +6,10 @@ export class User {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Generated()
+  @Column()
+  serial: number;
 
   @Column({ length: 64 })
   firstName: string;

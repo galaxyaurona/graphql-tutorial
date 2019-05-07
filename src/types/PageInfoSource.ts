@@ -1,7 +1,7 @@
 import { FindConditions } from 'typeorm';
 
 export type PageInfoSource<T> = {
-  firstCreatedAt: Date,
-  lastCreatedAt: Date,
+  startSerial: number,
+  endSerial: number,
   conditions?: FindConditions<T>,
 };

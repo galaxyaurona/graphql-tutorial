@@ -43,17 +43,17 @@ export class PostService {
     { first, after }: ConnectionInputForward,
     conditions: FindConditions<Post> = {},
   ): Promise<Post[]> {
-    const createdAfter: string = after && base64Decode(after);
-    const createdAt: FindConditions<Post> = createdAfter ? { createdAt : MoreThan(createdAfter) } : {};
+    const serialAfter: number = after && parseInt(base64Decode(after));
+    const serial: FindConditions<Post> = serialAfter ? { serial : MoreThan(serialAfter) } : {};
 
     const options: FindManyOptions<Post> = {
       take: first && first < 10 ? first : 10,
       where: {
-        ...createdAt,
+        ...serial,
         ...conditions,
       },
       order: {
-        createdAt: 'ASC',
+        serial: 'ASC',
       },
     };
 
@@ -64,17 +64,17 @@ export class PostService {
     { last, before }: ConnectionInputBackward,
     conditions: FindConditions<Post> = {},
   ): Promise<Post[]> {
-    const createdBefore: string = before && base64Decode(before);
-    const createdAt: FindConditions<Post> = createdBefore ? { createdAt : LessThan(createdBefore) } : {};
+    const serialBefore: number = before && parseInt(base64Decode(before));
+    const serial: FindConditions<Post> = serialBefore ? { serial : LessThan(serialBefore) } : {};
 
     const options: FindManyOptions<Post> = {
       take: last && last < 10 ? last : 10,
       where: {
-        ...createdAt,
+        ...serial,
         ...conditions,
       },
       order: {
-        createdAt: 'DESC',
+        serial: 'DESC',
       },
     };
 
