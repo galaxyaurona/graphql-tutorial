@@ -4,8 +4,8 @@ import { container } from '../../inversify/config';
 import { UserService } from '../../service/UserService';
 import { PostService } from '../../service/PostService';
 import { Post } from '../../entity/Post';
-import { PostsConnectionInput, PostsConnectionInputForward, PostsConnectionInputBackward } from '../../types/PostsConnectionInput';
-import { PostsConnectionSource } from '../../types/PostsConnectionSource';
+import { ConnectionInput, ConnectionInputForward, ConnectionInputBackward } from '../../types/ConnectionInput';
+import { ConnectionSource } from '../../types/ConnectionSource';
 
 export const Query = {
   books: () => [
@@ -31,17 +31,18 @@ export const Query = {
     return container.get<PostService>(PostService).getPost(id);
   },
 
-  posts: async (_src: any, args: any): Promise<PostsConnectionSource> => {
-    const input = Record({ input: PostsConnectionInput }).check(args)['input'] || {};
+  posts: async (_src: any, args: any): Promise<ConnectionSource<Post>> => {
+    const input = Record({ input: ConnectionInput }).check(args)['input'] || {};
+    let entities = [];
 
-    if (Object.keys(input).length === 0 || 'first' in input || 'after' in input) {
-      return {
-        entities: await container.get<PostService>(PostService).listPostsForward(input as PostsConnectionInputForward),
-      };
+    if (ConnectionInputForward.guard(input)) {
+      entities = await container.get<PostService>(PostService).listPostsForward(input);
+    } else if (ConnectionInputBackward.guard(input)) {
+      entities = await container.get<PostService>(PostService).listPostsBackward(input);
     } else {
-      return {
-        entities: await container.get<PostService>(PostService).listPostsBackward(input as PostsConnectionInputBackward),
-      };
+      entities = await container.get<PostService>(PostService).listPostsForward(input as ConnectionInputForward);
     }
+
+    return { entities };
   },
 };

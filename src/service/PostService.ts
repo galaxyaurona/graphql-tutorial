@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import { Post } from '../entity/Post';
 import { AddPostInput } from '../types/AddPostInput';
 import { getRepository, Repository, FindManyOptions, MoreThan, FindConditions, LessThan } from 'typeorm';
-import { PostsConnectionInputForward, PostsConnectionInputBackward } from '../types/PostsConnectionInput';
+import { ConnectionInputForward, ConnectionInputBackward } from '../types/ConnectionInput';
 import { base64Decode } from '../util/base64Decode';
 
 @injectable()
@@ -40,7 +40,7 @@ export class PostService {
   }
 
   public async listPostsForward(
-    { first, after }: PostsConnectionInputForward,
+    { first, after }: ConnectionInputForward,
     conditions: FindConditions<Post> = {},
   ): Promise<Post[]> {
     const createdAfter: string = after && base64Decode(after);
@@ -61,7 +61,7 @@ export class PostService {
   }
 
   public async listPostsBackward(
-    { last, before }: PostsConnectionInputBackward,
+    { last, before }: ConnectionInputBackward,
     conditions: FindConditions<Post> = {},
   ): Promise<Post[]> {
     const createdBefore: string = before && base64Decode(before);
@@ -78,6 +78,6 @@ export class PostService {
       },
     };
 
-    return this.listPosts(options);
+    return this.listPosts(options).then(r => r.reverse());
   }
 }
