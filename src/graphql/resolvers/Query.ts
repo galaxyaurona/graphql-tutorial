@@ -14,6 +14,21 @@ export const Query = {
     return container.get<UserService>(UserService).getUser(id);
   },
 
+  users: async (_src: any, args: any): Promise<ConnectionSource<User>> => {
+    const input = Record({ input: ConnectionInput }).check(args)['input'] || {};
+    let entities = [];
+
+    if (ConnectionInputForward.guard(input)) {
+      entities = await container.get<UserService>(UserService).listUsersForward(input);
+    } else if (ConnectionInputBackward.guard(input)) {
+      entities = await container.get<UserService>(UserService).listUsersBackward(input);
+    } else {
+      entities = await container.get<UserService>(UserService).listUsersForward(input as ConnectionInputForward);
+    }
+
+    return { entities };
+  },
+
   post: async (_src: any, args: any): Promise<Post> => {
     const { id } = Record({id: String}).check(args);
 

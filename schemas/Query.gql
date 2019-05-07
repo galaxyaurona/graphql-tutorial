@@ -1,5 +1,9 @@
 type Query {
-  user(id: ID!): User
   post(id: ID!): Post
+
   posts(input: ConnectionInput): PostsConnection
+
+  user(id: ID!): User
+
+  users(input: ConnectionInput): UsersConnection
 }

@@ -28,13 +28,6 @@ export class PostService {
     });
   }
 
-  public async listPosts(options: FindManyOptions<Post>): Promise<Post[]> {
-    return this.repo.find({
-      cache: true,
-      ...options,
-    });
-  }
-
   public async listPostsForward(
     { first, after }: ConnectionInputForward,
     conditions: FindConditions<Post> = {},
@@ -43,6 +36,7 @@ export class PostService {
     const serial: FindConditions<Post> = serialAfter ? { serial : MoreThan(serialAfter) } : {};
 
     const options: FindManyOptions<Post> = {
+      cache: true,
       take: first && first < 10 ? first : 10,
       where: {
         ...serial,
@@ -53,7 +47,7 @@ export class PostService {
       },
     };
 
-    return this.listPosts(options);
+    return this.repo.find(options);
   }
 
   public async listPostsBackward(
@@ -64,6 +58,7 @@ export class PostService {
     const serial: FindConditions<Post> = serialBefore ? { serial : LessThan(serialBefore) } : {};
 
     const options: FindManyOptions<Post> = {
+      cache: true,
       take: last && last < 10 ? last : 10,
       where: {
         ...serial,
@@ -74,6 +69,6 @@ export class PostService {
       },
     };
 
-    return this.listPosts(options).then(r => r.reverse());
+    return this.repo.find(options).then(r => r.reverse());
   }
 }
