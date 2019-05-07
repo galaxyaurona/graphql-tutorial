@@ -14,10 +14,7 @@ export const PostsConnectionPageInfo = {
       ...src.conditions,
     };
 
-    return getRepository(Post).count(conditions).then(r => {
-      console.log('previous: ', r);
-      return r;
-    });
+    return getRepository(Post).count(conditions);
   },
 
   hasNextPage: async (src: PageInfoSource<Post>) => {
@@ -26,9 +23,6 @@ export const PostsConnectionPageInfo = {
       ...src.conditions,
     };
 
-    return getRepository(Post).count(conditions).then(r => {
-      console.log('next', r);
-      return r;
-    });
+    return getRepository(Post).count(conditions);
   },
 };

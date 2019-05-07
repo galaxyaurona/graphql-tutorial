@@ -17,7 +17,7 @@ export const PostsConnection = {
   edges: async (src: ConnectionSource<Post>) => {
     return src.entities.map(entity => ({
       node: entity,
-      cursor: base64Encode(entity.createdAt.toISOString()),
+      cursor: base64Encode(entity.serial.toString()),
     }));
   },
 
