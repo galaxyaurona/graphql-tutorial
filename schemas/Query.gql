@@ -1,9 +1,19 @@
 type Query {
   post(id: ID!): Post
 
-  posts(input: ConnectionInput): PostsConnection
+  posts(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): PostsConnection
 
   user(id: ID!): User
 
-  users(input: ConnectionInput): UsersConnection
+  users(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): UsersConnection
 }

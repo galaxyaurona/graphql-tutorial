@@ -1,10 +1,10 @@
 import { Record, String } from 'runtypes';
+import { Post } from '../../entity/Post';
 import { User } from '../../entity/User';
 import { container } from '../../inversify/config';
-import { UserService } from '../../service/UserService';
 import { PostService } from '../../service/PostService';
-import { Post } from '../../entity/Post';
-import { ConnectionInput, ConnectionInputForward, ConnectionInputBackward } from '../../types/ConnectionInput';
+import { UserService } from '../../service/UserService';
+import { ConnectionInput, ConnectionInputBackward, ConnectionInputForward } from '../../types/ConnectionInput';
 import { ConnectionSource } from '../../types/ConnectionSource';
 
 export const Query = {
@@ -15,7 +15,7 @@ export const Query = {
   },
 
   users: async (_src: any, args: any): Promise<ConnectionSource<User>> => {
-    const input = Record({ input: ConnectionInput }).check(args)['input'] || {};
+    const input = ConnectionInput.check(args) || {};
     let entities = [];
 
     if (ConnectionInputForward.guard(input)) {
@@ -36,7 +36,7 @@ export const Query = {
   },
 
   posts: async (_src: any, args: any): Promise<ConnectionSource<Post>> => {
-    const input = Record({ input: ConnectionInput }).check(args)['input'] || {};
+    const input = ConnectionInput.check(args) || {};
     let entities = [];
 
     if (ConnectionInputForward.guard(input)) {

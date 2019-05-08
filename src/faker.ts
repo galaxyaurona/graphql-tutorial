@@ -32,7 +32,7 @@ const createPosts = async (users: User[], count = 500) => {
   return Array.from(Array(count)).reduce(total => {
     return total.then(async (posts: Post[]) => {
       const post = getRepository(Post).create({
-        title: faker.lorem.sentence(),
+        title: faker.lorem.words(),
         body: faker.lorem.paragraphs(),
         category: PostCategories[Math.floor(Math.random()*PostCategories.length)] as PostCategory,
         author: { id: users[Math.floor(Math.random()*users.length)].id },

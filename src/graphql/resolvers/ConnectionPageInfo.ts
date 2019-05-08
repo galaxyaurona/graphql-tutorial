@@ -1,8 +1,8 @@
-import { PageInfoSource } from '../../types/PageInfoSource';
+import { FindConditions, LessThan, MoreThan } from 'typeorm';
 import { Post } from '../../entity/Post';
-import { LessThan, MoreThan, FindConditions } from 'typeorm';
-import { base64Encode } from '../../util/base64Encode';
 import { User } from '../../entity/User';
+import { PageInfoSource } from '../../types/PageInfoSource';
+import { base64Encode } from '../../util/base64Encode';
 
 export const ConnectionPageInfo = {
   startCursor: (src: PageInfoSource<Post | User>) => base64Encode(src.startSerial.toString()),

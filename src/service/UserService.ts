@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
-import { getRepository, Repository, FindConditions, MoreThan, FindManyOptions, LessThan } from 'typeorm';
+import { FindConditions, FindManyOptions, getRepository, LessThan, MoreThan, Repository } from 'typeorm';
 import { User } from '../entity/User';
 import { AddUserInput } from '../types/AddUserInput';
+import { ConnectionInputBackward, ConnectionInputForward } from '../types/ConnectionInput';
 import { UpdateUserInput } from '../types/UpdateUserInput';
-import { ConnectionInputForward, ConnectionInputBackward } from '../types/ConnectionInput';
 import { base64Decode } from '../util/base64Decode';
 
 @injectable()

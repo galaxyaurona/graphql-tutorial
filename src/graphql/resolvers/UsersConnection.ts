@@ -1,6 +1,6 @@
-import { ConnectionSource } from '../../types/ConnectionSource';
-import { getRepository, FindManyOptions } from 'typeorm';
+import { FindManyOptions, getRepository } from 'typeorm';
 import { User } from '../../entity/User';
+import { ConnectionSource } from '../../types/ConnectionSource';
 import { PageInfoSource } from '../../types/PageInfoSource';
 import { base64Encode } from '../../util/base64Encode';
 
