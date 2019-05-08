@@ -1,14 +1,14 @@
-import { ConnectionInputForward } from './ConnectionInput';
+import { ConnectionInput } from './ConnectionInput';
 import { ValidationError } from 'runtypes';
 
-describe('ConnectionInputForward', () => {
-  const validate = (arg: any) => ConnectionInputForward.check(arg);
+describe('ConnectionInput', () => {
+  const validate = (arg: any) => ConnectionInput.check(arg);
 
   describe('arg is empty object', () => {
     const arg = {};
 
-    it('fails validation', () => {
-      expect(() => validate(arg)).toThrow(ValidationError);
+    it('validates arg', () => {
+      expect(validate(arg)).toBe(arg);
     });
   });
 
@@ -45,10 +45,10 @@ describe('ConnectionInputForward', () => {
   });
 
   describe('arg containing unknown attributes', () => {
-    const arg = { last: 3, before: 'foo' };
+    const arg = { foo: 3, bar: 'foo' };
 
-    it('fails validation', () => {
-      expect(() => validate(arg)).toThrow(ValidationError);
+    it('validates arg', () => {
+      expect(validate(arg)).toBe(arg);
     });
   });
 

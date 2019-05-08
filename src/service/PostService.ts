@@ -4,6 +4,7 @@ import { Post } from '../entity/Post';
 import { AddPostInput } from '../types/AddPostInput';
 import { ConnectionInput } from '../types/ConnectionInput';
 import { base64Decode } from '../util/base64Decode';
+import { MaxPageItems } from '../util/MaxPageItems';
 
 @injectable()
 export class PostService {
@@ -37,7 +38,7 @@ export class PostService {
     }
 
     const query = getRepository(Post).createQueryBuilder('p');
-    query.take(first || last || 10);
+    query.take(first || last || MaxPageItems);
     query.orderBy('p.serial', last ? 'DESC' : 'ASC');
     query.where('p.serial > :after', { after : after && parseInt(base64Decode(after)) || 0 });
 

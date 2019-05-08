@@ -5,6 +5,7 @@ import { AddUserInput } from '../types/AddUserInput';
 import { ConnectionInput } from '../types/ConnectionInput';
 import { UpdateUserInput } from '../types/UpdateUserInput';
 import { base64Decode } from '../util/base64Decode';
+import { MaxPageItems } from '../util/MaxPageItems';
 
 @injectable()
 export class UserService {
@@ -36,7 +37,7 @@ export class UserService {
     }
 
     const query = getRepository(User).createQueryBuilder('p');
-    query.take(first || last || 10);
+    query.take(first || last || MaxPageItems);
     query.orderBy('p.serial', last ? 'DESC' : 'ASC');
     query.where('p.serial > :after', { after : after && parseInt(base64Decode(after)) || 0 });
 
