@@ -1,8 +1,8 @@
-import { Record, String, Boolean, Partial, Static } from 'runtypes';
-import { isUUID } from 'validator';
+import { Boolean, Partial, Record, Static, String } from 'runtypes';
+import { UUID } from './UUID';
 
 export const UserSource = Record({
-  id: String.withConstraint(id => isUUID(id, 4), 'User id is not a valid UUID v4.'),
+  id: UUID,
   firstName: String,
   email: String,
   isActive: Boolean,

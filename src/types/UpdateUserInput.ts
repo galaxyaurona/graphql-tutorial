@@ -1,8 +1,8 @@
-import { Boolean, Record, String, Partial, Static } from 'runtypes';
-import { isUUID } from 'validator';
+import { Boolean, Partial, Record, Static, String } from 'runtypes';
+import { UUID } from './UUID';
 
 export const UpdateUserInput = Record({
-  id: String.withConstraint(id => isUUID(id, 4), 'User id is not a valid UUID v4.'),
+  id: UUID,
 }).And(Partial({
   firstName: String,
   lastName: String,

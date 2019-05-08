@@ -5,6 +5,7 @@ import { AddPostInput } from '../types/AddPostInput';
 import { ConnectionInput } from '../types/ConnectionInput';
 import { base64Decode } from '../util/base64Decode';
 import { MaxPageItems } from '../util/MaxPageItems';
+import { UpdatePostInput } from '../types/UpdatePostInput';
 
 @injectable()
 export class PostService {
@@ -14,13 +15,18 @@ export class PostService {
     this.repo = getRepository(Post);
   }
 
+  public async getPost(id: string): Promise<Post> {
+    return this.repo.findOne(id);
+  }
+
   public async addPost(input: AddPostInput): Promise<Post> {
     const post = this.repo.create(input);
     return this.repo.save(post);
   }
 
-  public async getPost(id: string): Promise<Post> {
-    return this.repo.findOne(id);
+  public async updateUser(input: UpdatePostInput): Promise<Post> {
+    await this.repo.update({ id: input.id }, input);
+    return this.getPost(input.id);
   }
 
   public async listPosts(
