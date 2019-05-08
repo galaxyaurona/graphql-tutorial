@@ -23,12 +23,6 @@ export class PostService {
     return this.repo.findOne(id);
   }
 
-  public async getAuthorsPosts(authorId: string): Promise<Post[]> {
-    return this.repo.find({
-      author: { id: authorId }
-    });
-  }
-
   public async listPosts(
     { first, after, last, before }: ConnectionInput,
     authorId?: string,
