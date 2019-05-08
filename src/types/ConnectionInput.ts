@@ -1,17 +1,14 @@
-import { String, Number, Static, Union, Record, Partial, Undefined } from 'runtypes';
+import { Number, Partial, Static, String } from 'runtypes';
+import { MaxPageItems } from '../util/MaxPageItems';
 
-export const ConnectionInputForward = Record({ first: Number, after: String })
-  .Or(Record({ first: Number }).And(Partial({ after: String })))
-  .Or(Record({ after: String }).And(Partial({ first: Number })));
+const positive = (n: number) => n > 0 && n <= MaxPageItems;
+const errorMsg = 'Maximum 10 items per page.';
 
-export type ConnectionInputForward = Static<typeof ConnectionInputForward>;
-
-export const ConnectionInputBackward = Record({ last: Number, before: String })
-  .Or(Record({ last: Number }).And(Partial({ before: String })))
-  .Or(Record({ before: String }).And(Partial({ last: Number })));
-
-export type ConnectionInputBackward = Static<typeof ConnectionInputBackward>;
-
-export const ConnectionInput = Union(ConnectionInputForward, ConnectionInputBackward, Undefined, Record({}));
+export const ConnectionInput = Partial({
+  first: Number.withConstraint(positive, errorMsg),
+  after: String,
+  last: Number.withConstraint(positive, errorMsg),
+  before: String,
+});
 
 export type ConnectionInput = Static<typeof ConnectionInput>;

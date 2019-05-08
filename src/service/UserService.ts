@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
-import { FindConditions, FindManyOptions, getRepository, LessThan, MoreThan, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { User } from '../entity/User';
 import { AddUserInput } from '../types/AddUserInput';
-import { ConnectionInputBackward, ConnectionInputForward } from '../types/ConnectionInput';
+import { ConnectionInput } from '../types/ConnectionInput';
 import { UpdateUserInput } from '../types/UpdateUserInput';
 import { base64Decode } from '../util/base64Decode';
 
@@ -30,47 +30,21 @@ export class UserService {
     return this.getUser(input.id);
   }
 
-  public async listUsersForward(
-    { first, after }: ConnectionInputForward,
-    conditions: FindConditions<User> = {},
-  ): Promise<User[]> {
-    const serialAfter: number = after && parseInt(base64Decode(after));
-    const serial: FindConditions<User> = serialAfter ? { serial : MoreThan(serialAfter) } : {};
+  public async listUsers({ first, after, last, before }: ConnectionInput): Promise<User[]> {
+    if (first && last) {
+      throw new RangeError('Having both \'first\' and \'last\' in connection arguments is ambiguous.');
+    }
 
-    const options: FindManyOptions<User> = {
-      cache: true,
-      take: first && first < 10 ? first : 10,
-      where: {
-        ...serial,
-        ...conditions,
-      },
-      order: {
-        serial: 'ASC',
-      },
-    };
+    const query = getRepository(User).createQueryBuilder('p');
+    query.take(first || last || 10);
+    query.orderBy('p.serial', last ? 'DESC' : 'ASC');
+    query.where('p.serial > :after', { after : after && parseInt(base64Decode(after)) || 0 });
 
-    return this.repo.find(options);
-  }
-
-  public async listUsersBackward(
-    { last, before }: ConnectionInputBackward,
-    conditions: FindConditions<User> = {},
-  ): Promise<User[]> {
     const serialBefore: number = before && parseInt(base64Decode(before));
-    const serial: FindConditions<User> = serialBefore ? { serial : LessThan(serialBefore) } : {};
+    if (serialBefore) {
+      query.andWhere('p.serial < :before', { before: serialBefore });
+    }
 
-    const options: FindManyOptions<User> = {
-      cache: true,
-      take: last && last < 10 ? last : 10,
-      where: {
-        ...serial,
-        ...conditions,
-      },
-      order: {
-        serial: 'DESC',
-      },
-    };
-
-    return this.repo.find(options).then(r => r.reverse());
+    return query.getMany().then(list => last ? list.reverse() : list);
   }
 }
