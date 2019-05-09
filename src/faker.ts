@@ -12,37 +12,29 @@ import { Post } from './entity/Post';
 import { PostCategories, PostCategory } from './types/PostCategory';
 
 const createUsers = async (count = 50) => {
-  return Array.from(Array(count)).reduce(total => {
-    return total.then(async (users: User[]) => {
-      const user = getRepository(User).create({
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        email: faker.internet.email(),
-        isActive: faker.random.boolean(),
-      });
-
-      users.push(await getRepository(User).save(user));
-
-      return users;
+  const users = Array.from(Array(count)).map(() => {
+    return getRepository(User).create({
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      email: faker.internet.email(),
+      isActive: faker.random.boolean(),
     });
-  }, new Promise(r => r([])));
+  });
+
+  return getRepository(User).save(users);
 };
 
 const createPosts = async (users: User[], count = 500) => {
-  return Array.from(Array(count)).reduce(total => {
-    return total.then(async (posts: Post[]) => {
-      const post = getRepository(Post).create({
-        title: faker.lorem.words(),
-        body: faker.lorem.paragraphs(),
-        category: PostCategories[Math.floor(Math.random()*PostCategories.length)] as PostCategory,
-        author: { id: users[Math.floor(Math.random()*users.length)].id },
-      });
-
-      posts.push(await getRepository(Post).save(post));
-
-      return posts;
+  const posts = Array.from(Array(count)).map(() => {
+    return getRepository(Post).create({
+      title: faker.lorem.words(),
+      body: faker.lorem.paragraphs(),
+      category: PostCategories[Math.floor(Math.random()*PostCategories.length)] as PostCategory,
+      author: { id: users[Math.floor(Math.random()*users.length)].id },
     });
-  }, new Promise(r => r([])));
+  });
+
+  return getRepository(Post).save(posts);
 };
 
 globalCatchOnPromiseRejection();
