@@ -1,14 +1,9 @@
 type User {
   id: ID!
-
   firstName: String!
-
   lastName: String
-
   email: String!
-
   isActive: Boolean!
-
   posts(
     first: Int
     after: String

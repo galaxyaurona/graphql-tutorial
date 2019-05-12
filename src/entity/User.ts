@@ -8,7 +8,7 @@ export class User {
   id: string;
 
   @Generated()
-  @Column()
+  @Column({ select: false })
   serial: number;
 
   @Column({ length: 64 })

@@ -1,22 +1,23 @@
-import * as path from 'path';
+import * as nodePath from 'path';
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 import { Application } from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 
-export const addGraphQL = (app: Application, uriPath: string): ApolloServer => {
+export const addGraphQL = (app: Application, path: string): ApolloServer => {
   // Type definitions.
-  const typeDefs = gql`${mergeTypes(
-    fileLoader(path.join(__dirname, '../../schemas/**/*.gql'), { recursive: true }),
+  const schemas = mergeTypes(
+    fileLoader(nodePath.join(__dirname, '../../schemas/**/*.gql'), { recursive: true }),
     { all: true },
-  )}`;
+  );
+  const typeDefs = gql`${schemas}`;
 
   // Resolver object.
   const resolvers = mergeResolvers(
-    fileLoader(path.join(__dirname, './resolvers'), { recursive: true })
+    fileLoader(nodePath.join(__dirname, './resolvers'), { recursive: true })
   );
 
   const server = new ApolloServer({ typeDefs, resolvers });
-  server.applyMiddleware({ app, path: uriPath });
+  server.applyMiddleware({ app, path });
 
   return server;
 };

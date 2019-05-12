@@ -10,7 +10,7 @@ export const User = {
     const input = ConnectionInput.check(args) || {};
 
     return {
-      entities: await container.get<PostService>(PostService).listPosts(input),
+      entities: await container.get<PostService>(PostService).listPosts(input, src.id),
       conditions: { authorId: src.id },
     };
   },
