@@ -5,9 +5,9 @@ import { PageInfoSource } from '../../types/PageInfoSource';
 import { base64Encode } from '../../util/base64Encode';
 
 export const ConnectionPageInfo = {
-  startCursor: (src: PageInfoSource<Post | User>) => base64Encode(src.startSerial.toString()),
+  startCursor: (src: PageInfoSource<Post | User>) => src.startSerial && base64Encode(src.startSerial.toString()),
 
-  endCursor: (src: PageInfoSource<Post | User>) => base64Encode(src.endSerial.toString()),
+  endCursor: (src: PageInfoSource<Post | User>) => src.endSerial && base64Encode(src.endSerial.toString()),
 
   hasPreviousPage: async (src: PageInfoSource<Post | User>) => {
     const conditions: FindConditions<Post | User> = {

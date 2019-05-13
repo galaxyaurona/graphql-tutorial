@@ -8,6 +8,12 @@ import { ConnectionInput } from '../../types/ConnectionInput';
 import { ConnectionSource } from '../../types/ConnectionSource';
 
 export const Query = {
+  node: async (_src: any, args: any): Promise<Post | User> => {
+    const { id } = Record({id: String}).check(args);
+
+    return await container.get<PostService>(PostService).getPost(id) || await container.get<UserService>(UserService).getUser(id);
+  },
+
   user: async (_src: any, args: any): Promise<User> => {
     const { id } = Record({id: String}).check(args);
 

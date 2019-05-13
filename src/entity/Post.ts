@@ -9,7 +9,7 @@ export class Post {
   id: string;
 
   @Generated()
-  @Column({ select: false })
+  @Column()
   serial: number;
 
   @Column({ length: 256 })
