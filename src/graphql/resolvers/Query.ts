@@ -15,7 +15,7 @@ export const Query = {
   },
 
   users: async (_src: any, args: any): Promise<ConnectionSource<User>> => {
-    const input = ConnectionInput.check(args) || {};
+    const input = ConnectionInput.check(args);
 
     return { entities: await container.get<UserService>(UserService).listUsers(input) };
   },
@@ -27,7 +27,7 @@ export const Query = {
   },
 
   posts: async (_src: any, args: any): Promise<ConnectionSource<Post>> => {
-    const input = ConnectionInput.check(args) || {};
+    const input = ConnectionInput.check(args);
 
     return { entities: await container.get<PostService>(PostService).listPosts(input) };
   },

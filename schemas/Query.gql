@@ -6,7 +6,7 @@ type Query {
     after: String
     last: Int
     before: String
-  ): PostsConnection
+  ): PostsConnection!
 
   user(id: ID!): User
 
@@ -15,5 +15,5 @@ type Query {
     after: String
     last: Int
     before: String
-  ): UsersConnection
+  ): UsersConnection!
 }

@@ -7,7 +7,7 @@ import { ConnectionSource } from '../../types/ConnectionSource';
 
 export const User = {
   posts: async (src: UserEntity, args: any): Promise<ConnectionSource<Post>> => {
-    const input = ConnectionInput.check(args) || {};
+    const input = ConnectionInput.check(args);
 
     return {
       entities: await container.get<PostService>(PostService).listPosts(input, src.id),
