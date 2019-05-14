@@ -8,6 +8,7 @@ export const connectDatabase: () => Promise<Connection> = () => createConnection
   username: 'postgres',
   password: 'example',
   database: 'postgres',
+  logging: true,
   entities: [
     path.join(__dirname, 'entity/**/*.js')
   ],

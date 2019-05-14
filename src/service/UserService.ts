@@ -1,5 +1,6 @@
 import { injectable } from 'inversify';
 import { getRepository, Repository } from 'typeorm';
+import { UserLoader } from '../dataloader/UserLoader';
 import { User } from '../entity/User';
 import { AddUserInput } from '../types/AddUserInput';
 import { ConnectionInput } from '../types/ConnectionInput';
@@ -11,14 +12,14 @@ import { MaxPageItems } from '../util/MaxPageItems';
 export class UserService {
   protected repo: Repository<User>;
 
-  constructor() {
+  constructor(
+    protected userLoader: UserLoader,
+  ) {
     this.repo = getRepository(User);
   }
 
   public async getUser(id: string): Promise<User> {
-    return this.repo.findOne({
-      where: { id },
-    });
+    return this.userLoader.load(id);
   }
 
   public async addUser(input: AddUserInput): Promise<User> {

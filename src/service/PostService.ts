@@ -1,22 +1,25 @@
 import { injectable } from 'inversify';
 import { getRepository, Repository } from 'typeorm';
+import { PostLoader } from '../dataloader/PostLoader';
 import { Post } from '../entity/Post';
 import { AddPostInput } from '../types/AddPostInput';
 import { ConnectionInput } from '../types/ConnectionInput';
+import { UpdatePostInput } from '../types/UpdatePostInput';
 import { base64Decode } from '../util/base64Decode';
 import { MaxPageItems } from '../util/MaxPageItems';
-import { UpdatePostInput } from '../types/UpdatePostInput';
 
 @injectable()
 export class PostService {
   protected repo: Repository<Post>;
 
-  constructor() {
+  constructor(
+    protected postLoader: PostLoader,
+  ) {
     this.repo = getRepository(Post);
   }
 
   public async getPost(id: string): Promise<Post> {
-    return this.repo.findOne(id);
+    return this.postLoader.load(id);
   }
 
   public async addPost(input: AddPostInput): Promise<Post> {
