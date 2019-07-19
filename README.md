@@ -15,3 +15,6 @@ Asset for a tutorial of GraphQL with typescript
 | Install new package | `docker-compose exec server npm i {name} --save` * |
 
 \* Only when application is running.
+
+## Adminer
+Visit http://localhost:8080.

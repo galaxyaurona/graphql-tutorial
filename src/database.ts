@@ -3,11 +3,11 @@ import { createConnection, Connection } from 'typeorm';
 
 export const connectDatabase: () => Promise<Connection> = () => createConnection({
   type: 'postgres',
-  host: process.env['DB_HOST'] || 'db',
-  port: +process.env['DB_PORT'] || 5432,
-  username: process.env['DB_USER'] || 'postgres',
-  password: process.env['DB_PASSWORD'] || 'example',
-  database: process.env['DB_NAME'] || 'postgres',
+  host: process.env['DB_HOST'],
+  port: +process.env['DB_PORT'],
+  username: process.env['DB_USER'],
+  password: process.env['DB_PASSWORD'],
+  database: process.env['DB_NAME'],
   logging: true,
   entities: [
     path.join(__dirname, 'entity/**/*.js')
