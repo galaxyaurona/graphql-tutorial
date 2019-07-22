@@ -8,7 +8,7 @@ export const initServer = (): void => {
   app.use(cors({origin: true}));
 
   app.get('/', function (_, res: express.Response) {
-    res.send('Hello World');
+    res.send('Hello from GraphQL');
   });
 
   addGraphQL(app, '/graphql');
