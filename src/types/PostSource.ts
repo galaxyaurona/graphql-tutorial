@@ -4,7 +4,7 @@ import { UserSource } from './UserSource';
 import { isUUID } from 'validator';
 
 export const PostSource = Record({
-  id: String.withConstraint(id => isUUID(id, 4), 'Post id is not a valid UUID v4.'),
+  id: String.withConstraint(id => isUUID(id, 4), { name: 'UUID v4' }),
   title: String,
   category: PostCategory,
   createdAt: Number,

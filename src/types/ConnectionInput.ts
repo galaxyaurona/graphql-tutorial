@@ -2,12 +2,11 @@ import { Number, Partial, Static, String } from 'runtypes';
 import { MaxPageItems } from '../util/MaxPageItems';
 
 const positive = (n: number) => n > 0 && n <= MaxPageItems;
-const errorMsg = 'Maximum 10 items per page.';
 
 export const ConnectionInput = Partial({
-  first: Number.withConstraint(positive, errorMsg),
+  first: Number.withConstraint(positive, { name: `Max ${MaxPageItems}` }),
   after: String,
-  last: Number.withConstraint(positive, errorMsg),
+  last: Number.withConstraint(positive, { name: `Max ${MaxPageItems}` }),
   before: String,
 });
 

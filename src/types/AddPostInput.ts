@@ -5,7 +5,7 @@ import { isUUID } from 'validator';
 export const AddPostInput = Record({
   title: String,
   category: PostCategory,
-  authorId: String.withConstraint(id => isUUID(id, 4), 'authorId is not a valid UUID v4.'),
+  authorId: String.withConstraint(id => isUUID(id, 4), { name: 'UUID v4' }),
 }).And(Partial({
   body: String,
 }));
