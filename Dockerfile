@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:12-alpine
 
 ENV PORT 4000
 EXPOSE 4000
