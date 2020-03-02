@@ -1,6 +1,6 @@
 version: "3"
 services:
-  server:
+  server: &server
     image: node:12-alpine
     environment:
       - PORT=4000
@@ -31,3 +31,7 @@ services:
       - 8080:8080
     depends_on:
       - db
+
+  test:
+    <<: *server
+    command: sh -c "npm install && npm run test"

@@ -4,7 +4,7 @@ Asset for a tutorial of GraphQL with typescript
 ## Commands
 | Action | Command |
 | --- | --- |
-| Run application | `docker-compose up -d` |
+| Run application | `docker-compose up -d server adminer` |
 | Preview logs | `docker-compose logs -f` |
 | Stop logs preview | `Ctrl + c` |
 | Stop running containers | `docker-compose stop` |
