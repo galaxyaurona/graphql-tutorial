@@ -13,7 +13,7 @@ export const addGraphQL = (app: Application, path: string): ApolloServer => {
 
   // Resolver object.
   const resolvers = mergeResolvers(
-    fileLoader(nodePath.join(__dirname, './resolvers'), { recursive: true })
+    fileLoader(nodePath.join(__dirname, './resolvers'), { recursive: true }),
   );
 
   const server = new ApolloServer({ typeDefs, resolvers });

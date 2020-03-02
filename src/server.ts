@@ -14,6 +14,6 @@ export const initServer = (): void => {
   addGraphQL(app, '/graphql');
 
   app.listen({ port }, () =>
-    console.log(`🚀 Server ready at http://localhost:${port}`)
+    console.log(`🚀 Server ready at http://localhost:${port}`),
   );
 };

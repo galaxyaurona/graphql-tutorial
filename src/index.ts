@@ -1,4 +1,3 @@
-// tslint:disable:no-import-side-effect
 import 'reflect-metadata';
 import 'source-map-support/register';
 

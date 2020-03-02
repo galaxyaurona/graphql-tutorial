@@ -8,13 +8,13 @@ module.exports = {
   logging: false,
   synchronize: false,
   entities: [
-    "dist/entity/**/*.js"
+    'dist/entity/**/*.js',
   ],
   migrations: [
-    "dist/typeorm/migration/*.js"
+    'dist/typeorm/migration/*.js',
   ],
   cli: {
-    entitiesDir: "src/entity",
-    migrationsDir: "src/typeorm/migration"
+    entitiesDir: 'src/entity',
+    migrationsDir: 'src/typeorm/migration',
   },
 };

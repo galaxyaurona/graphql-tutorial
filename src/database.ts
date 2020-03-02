@@ -10,7 +10,7 @@ export const connectDatabase: () => Promise<Connection> = () => createConnection
   database: process.env['DB_NAME'],
   logging: true,
   entities: [
-    path.join(__dirname, 'entity/**/*.js')
+    path.join(__dirname, 'entity/**/*.js'),
   ],
   synchronize: false,
 });
