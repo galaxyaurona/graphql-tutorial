@@ -22,8 +22,8 @@ export const PostsConnection = {
   },
 
   pageInfo: (src: ConnectionSource<Post>): PageInfoSource<Post> => ({
-    startSerial: src.entities[0].serial,
-    endSerial: src.entities[src.entities.length - 1].serial,
+    startSerial: src.entities.length ? src.entities[0].serial : null,
+    endSerial: src.entities.length ? src.entities[src.entities.length - 1].serial : null,
     repository: getRepository(Post),
     conditions: src.conditions,
   }),

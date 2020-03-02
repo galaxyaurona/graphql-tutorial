@@ -1,8 +1,8 @@
 import { FindConditions, Repository } from 'typeorm';
 
 export type PageInfoSource<T> = {
-  startSerial: number,
-  endSerial: number,
+  startSerial: number | null,
+  endSerial: number | null,
   repository: Repository<T>,
   conditions?: FindConditions<T>,
 };

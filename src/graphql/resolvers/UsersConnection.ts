@@ -22,8 +22,8 @@ export const UsersConnection = {
   },
 
   pageInfo: (src: ConnectionSource<User>): PageInfoSource<User> => ({
-    startSerial: src.entities[0].serial,
-    endSerial: src.entities[src.entities.length - 1].serial,
+    startSerial: src.entities.length ? src.entities[0].serial : null,
+    endSerial: src.entities.length ? src.entities[src.entities.length - 1].serial : null,
     repository: getRepository(User),
     conditions: src.conditions,
   }),
