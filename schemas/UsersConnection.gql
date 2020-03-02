@@ -1,7 +1,0 @@
-type UsersConnection {
-  totalCount: Int!
-
-  edges: [UsersConnectionEdge!]!
-
-  pageInfo: ConnectionPageInfo
-}

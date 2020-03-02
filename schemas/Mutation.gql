@@ -1,7 +1,0 @@
-type Mutation {
-  addUser(input: AddUserInput!): User
-
-  updateUser(input: UpdateUserInput!): User
-
-  addPost(input: AddPostInput!): Post
-}

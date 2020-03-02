@@ -1,6 +1,0 @@
-input AddPostInput {
-  title: String!
-  body: String
-  category: PostCategory!
-  authorId: ID!
-}

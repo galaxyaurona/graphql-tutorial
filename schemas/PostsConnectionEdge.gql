@@ -1,4 +1,0 @@
-type PostsConnectionEdge {
-  node: Post!
-  cursor: String!
-}

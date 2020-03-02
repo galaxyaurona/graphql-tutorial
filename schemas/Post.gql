@@ -1,8 +1,0 @@
-type Post implements Node {
-  id: ID!
-  title: String!
-  body: String
-  category: PostCategory!
-  createdAt: String!
-  author: User!
-}

@@ -1,5 +1,0 @@
-type UsersConnectionEdge {
-  node: User!
-
-  cursor: String!
-}
